@@ -1,0 +1,30 @@
+https://leetcode.com/problems/valid-parentheses/
+
+bool isValid(char *s) {//bool型態的函數//指向字元陣列的指標（*s和s 指向陣列中第一個元素）
+    char *q=s;//堆疊指標，初值指向s陣列的第一個元素
+    
+    for (char *p=s; *p; p++) {
+        switch(*p) {
+            //遇到左括號就將一個右括號放入堆疊q
+            case '(':
+                *q = ')';
+                q++;
+                continue;
+            case '{':
+                *q = '}';
+                q++;
+                continue;
+            case '[':
+                *q = ']';
+                q++;
+                continue;
+            default:
+                if (q == s){//偵測(()和)()情況//堆疊q為空(在最前面)，但還有沒配對的刮號
+                    return false;
+                }else if(*p != *--q){   //先q-1再判斷//左右括號不匹配
+                    return false;
+                }
+        }
+    }
+    return q == s;//判斷堆疊q是否在最前面（有沒有配對完）
+}
